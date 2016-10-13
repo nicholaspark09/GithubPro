@@ -44,16 +44,15 @@ public class ReposRepository implements ReposDataSource{
 
     @VisibleForTesting
     @Nullable
-    Map<Integer,Repo> mCachedRepos;
+    public Map<Integer,Repo> mCachedRepos;
 
     @VisibleForTesting
-    boolean mCacheIsDirty = false;
+    public boolean mCacheIsDirty = false;
 
     @Inject
-    ReposRepository(@Local @Named("localSource") ReposDataSource localDataSource, @Remote @Named("remoteSource") ReposDataSource remoteDataSource){
+    public ReposRepository(@Local @Named("localSource") ReposDataSource localDataSource, @Remote @Named("remoteSource") ReposDataSource remoteDataSource){
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
-
     }
 
     @Override
@@ -122,6 +121,14 @@ public class ReposRepository implements ReposDataSource{
     @Override
     public void saveRepo(@NonNull Repo repo) {
 
+        //Don't actually save it to github as you don't have login yet
+        localDataSource.saveRepo(repo);
+
+        //Do in memory cache update
+        if(mCachedRepos == null)
+            mCachedRepos = new LinkedHashMap<>();
+
+        mCachedRepos.put(repo.getId(),repo);
     }
 
     @Override
@@ -140,6 +147,8 @@ public class ReposRepository implements ReposDataSource{
         }
         mCachedRepos.clear();
     }
+
+
 
     @Override
     public void refreshRepos() {
