@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -133,6 +134,11 @@ public class ReposIndexView extends Fragment implements ReposIndexContract.View{
     }
 
     @Override
+    public void showLoadingReposError() {
+
+    }
+
+    @Override
     public boolean isActive() {
         return false;
     }
@@ -170,6 +176,10 @@ public class ReposIndexView extends Fragment implements ReposIndexContract.View{
         void onFragmentInteraction(Uri uri);
     }
 
+
+    private void showMessage(String message){
+        Snackbar.make(getView(),message,Snackbar.LENGTH_LONG).show();
+    }
 
     /**
      *      Listen for clicks on Repos in the RecyclerViews

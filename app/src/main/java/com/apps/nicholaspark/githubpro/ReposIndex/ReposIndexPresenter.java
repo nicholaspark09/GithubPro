@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -22,20 +23,22 @@ import rx.subscriptions.CompositeSubscription;
  * Created by nicholaspark on 10/12/16.
  */
 
-final class ReposIndexPresenter implements ReposIndexContract.Presenter{
+public class ReposIndexPresenter implements ReposIndexContract.Presenter{
 
     private final ReposRepository mRepository;
     private final ReposIndexContract.View mView;
     private final CompositeSubscription subscriptions;
+    private Scheduler androidMainThread;
     private boolean mFirstLoad = true;
     private static final String username = "nicholaspark09";
     private static final String TAG = ReposIndexPresenter.class.getSimpleName();
 
     @Inject
-    ReposIndexPresenter(ReposRepository reposRepository, ReposIndexContract.View view, CompositeSubscription subscription){
+    public ReposIndexPresenter(ReposRepository reposRepository, ReposIndexContract.View view, Scheduler mainThread){
         mRepository = reposRepository;
         mView = view;
-        this.subscriptions = subscription;
+        this.androidMainThread = mainThread;
+        this.subscriptions = new CompositeSubscription();
     }
 
     @Inject
@@ -66,19 +69,16 @@ final class ReposIndexPresenter implements ReposIndexContract.Presenter{
                 })
                 .toList()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(androidMainThread)
                 .subscribe(new Observer<List<Repo>>() {
                     @Override
                     public void onCompleted() {
                         mView.setLoadingIndicator(false);
-                        Log.d(TAG,"Completed the repository load");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.setLoadingIndicator(false);
-                        Log.e(TAG,"Error: "+e.getMessage());
-
+                        mView.showLoadingReposError();
                     }
 
                     @Override

@@ -22,6 +22,7 @@ public interface ReposIndexContract {
         void showRepoDetailsUi(int repoId);
         void showNoRepos();
         void showSuccessfullySaved();
+        void showLoadingReposError();
         boolean isActive();
 
     }

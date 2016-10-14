@@ -2,6 +2,9 @@ package com.apps.nicholaspark.githubpro.ReposIndex;
 
 import dagger.Module;
 import dagger.Provides;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -22,7 +25,7 @@ public class ReposIndexPresenterModule {
     }
 
     @Provides
-    CompositeSubscription providesCompositeSubscription(){
-        return new CompositeSubscription();
+    Scheduler providesAndroidScheduler(){
+        return AndroidSchedulers.mainThread();
     }
 }
