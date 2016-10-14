@@ -96,7 +96,7 @@ final class ReposIndexPresenter implements ReposIndexContract.Presenter{
 
     @Override
     public void openRepoDetails(@NonNull Repo repo) {
-
+        mView.showRepoDetailsUi(repo.getId());
     }
 
     @Override

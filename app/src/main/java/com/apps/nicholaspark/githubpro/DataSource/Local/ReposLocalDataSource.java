@@ -90,6 +90,22 @@ public class ReposLocalDataSource implements ReposDataSource{
     }
 
     @Override
+    public Observable<Repo> getRepo(@NonNull int repoId) {
+        String[] projection = {
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_ID,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_NAME,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_FULL_NAME,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_PRIVATE,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_DESCRIPTION,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_HTML_URL,
+                RepoPersistenceContract.RepoEntry.COLUMN_NAME_URL
+        };
+        String sql = String.format("SELECT %s FROM %s WHERE %s LIKE ?",TextUtils.join(",",projection), RepoPersistenceContract.RepoEntry.TABLE_NAME, RepoPersistenceContract.RepoEntry.COLUMN_NAME_ID);
+        return briteDatabase.createQuery(RepoPersistenceContract.RepoEntry.TABLE_NAME,sql,String.valueOf(repoId))
+                .mapToOneOrDefault(mRepoMapperFunction,null);
+    }
+
+    @Override
     public void saveRepo(@NonNull Repo repo) {
         ContentValues values = new ContentValues();
         values.put(RepoPersistenceContract.RepoEntry.COLUMN_NAME_ID,repo.getId());

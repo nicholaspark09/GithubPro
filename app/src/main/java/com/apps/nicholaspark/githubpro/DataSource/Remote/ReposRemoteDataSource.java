@@ -35,6 +35,11 @@ public class ReposRemoteDataSource implements ReposDataSource{
     }
 
     @Override
+    public Observable<Repo> getRepo(int repoId) {
+        return null;
+    }
+
+    @Override
     public void saveRepo(@NonNull Repo repo) {
 
     }

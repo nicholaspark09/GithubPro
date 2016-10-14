@@ -1,11 +1,14 @@
 package com.apps.nicholaspark.githubpro.Models;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Repo {
+public class Repo implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -211,6 +214,76 @@ public class Repo {
     @SerializedName("default_branch")
     @Expose
     private String defaultBranch;
+
+    public Repo(){
+
+    }
+
+    protected Repo(Parcel in) {
+        name = in.readString();
+        fullName = in.readString();
+        owner = in.readParcelable(Owner.class.getClassLoader());
+        htmlUrl = in.readString();
+        description = in.readString();
+        url = in.readString();
+        forksUrl = in.readString();
+        keysUrl = in.readString();
+        collaboratorsUrl = in.readString();
+        teamsUrl = in.readString();
+        hooksUrl = in.readString();
+        issueEventsUrl = in.readString();
+        eventsUrl = in.readString();
+        assigneesUrl = in.readString();
+        branchesUrl = in.readString();
+        tagsUrl = in.readString();
+        blobsUrl = in.readString();
+        gitTagsUrl = in.readString();
+        gitRefsUrl = in.readString();
+        treesUrl = in.readString();
+        statusesUrl = in.readString();
+        languagesUrl = in.readString();
+        stargazersUrl = in.readString();
+        contributorsUrl = in.readString();
+        subscribersUrl = in.readString();
+        subscriptionUrl = in.readString();
+        commitsUrl = in.readString();
+        gitCommitsUrl = in.readString();
+        commentsUrl = in.readString();
+        issueCommentUrl = in.readString();
+        contentsUrl = in.readString();
+        compareUrl = in.readString();
+        mergesUrl = in.readString();
+        archiveUrl = in.readString();
+        downloadsUrl = in.readString();
+        issuesUrl = in.readString();
+        pullsUrl = in.readString();
+        milestonesUrl = in.readString();
+        notificationsUrl = in.readString();
+        labelsUrl = in.readString();
+        releasesUrl = in.readString();
+        deploymentsUrl = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+        pushedAt = in.readString();
+        gitUrl = in.readString();
+        sshUrl = in.readString();
+        cloneUrl = in.readString();
+        svnUrl = in.readString();
+        homepage = in.readString();
+        defaultBranch = in.readString();
+    }
+
+    public static final Creator<Repo> CREATOR = new Creator<Repo>() {
+        @Override
+        public Repo createFromParcel(Parcel in) {
+            return new Repo(in);
+        }
+
+        @Override
+        public Repo[] newArray(int size) {
+            return new Repo[size];
+        }
+    };
 
     /**
      *
@@ -1436,4 +1509,63 @@ public class Repo {
         this.defaultBranch = defaultBranch;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(fullName);
+        dest.writeParcelable(owner, flags);
+        dest.writeString(htmlUrl);
+        dest.writeString(description);
+        dest.writeString(url);
+        dest.writeString(forksUrl);
+        dest.writeString(keysUrl);
+        dest.writeString(collaboratorsUrl);
+        dest.writeString(teamsUrl);
+        dest.writeString(hooksUrl);
+        dest.writeString(issueEventsUrl);
+        dest.writeString(eventsUrl);
+        dest.writeString(assigneesUrl);
+        dest.writeString(branchesUrl);
+        dest.writeString(tagsUrl);
+        dest.writeString(blobsUrl);
+        dest.writeString(gitTagsUrl);
+        dest.writeString(gitRefsUrl);
+        dest.writeString(treesUrl);
+        dest.writeString(statusesUrl);
+        dest.writeString(languagesUrl);
+        dest.writeString(stargazersUrl);
+        dest.writeString(contributorsUrl);
+        dest.writeString(subscribersUrl);
+        dest.writeString(subscriptionUrl);
+        dest.writeString(commitsUrl);
+        dest.writeString(gitCommitsUrl);
+        dest.writeString(commentsUrl);
+        dest.writeString(issueCommentUrl);
+        dest.writeString(contentsUrl);
+        dest.writeString(compareUrl);
+        dest.writeString(mergesUrl);
+        dest.writeString(archiveUrl);
+        dest.writeString(downloadsUrl);
+        dest.writeString(issuesUrl);
+        dest.writeString(pullsUrl);
+        dest.writeString(milestonesUrl);
+        dest.writeString(notificationsUrl);
+        dest.writeString(labelsUrl);
+        dest.writeString(releasesUrl);
+        dest.writeString(deploymentsUrl);
+        dest.writeString(createdAt);
+        dest.writeString(updatedAt);
+        dest.writeString(pushedAt);
+        dest.writeString(gitUrl);
+        dest.writeString(sshUrl);
+        dest.writeString(cloneUrl);
+        dest.writeString(svnUrl);
+        dest.writeString(homepage);
+        dest.writeString(defaultBranch);
+    }
 }

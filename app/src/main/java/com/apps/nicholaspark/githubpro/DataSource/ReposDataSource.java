@@ -17,6 +17,8 @@ public interface ReposDataSource {
 
     Observable<List<Repo>> getRepos(String username);
 
+    Observable<Repo> getRepo(int repoId);
+
     void saveRepo(@NonNull Repo repo);
     void deleteRepo(@NonNull int repoId);
     void deleteAllRepos();

@@ -1,6 +1,7 @@
 package com.apps.nicholaspark.githubpro.ReposIndex;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.apps.nicholaspark.githubpro.Models.Repo;
 import com.apps.nicholaspark.githubpro.R;
+import com.apps.nicholaspark.githubpro.RepoDetail.RepoDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +117,9 @@ public class ReposIndexView extends Fragment implements ReposIndexContract.View{
 
     @Override
     public void showRepoDetailsUi(int repoId) {
-
+        Intent intent = new Intent(getContext(), RepoDetailActivity.class);
+        intent.putExtra("repoId",repoId);
+        startActivity(intent);
     }
 
     @Override
@@ -193,6 +197,7 @@ public class ReposIndexView extends Fragment implements ReposIndexContract.View{
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.repo_row,parent,false);
             ViewHolder holder = new ViewHolder(view);
+
             return holder;
         }
 
@@ -200,6 +205,12 @@ public class ReposIndexView extends Fragment implements ReposIndexContract.View{
         public void onBindViewHolder(ViewHolder holder, int position) {
             final Repo repo = repos.get(position);
             holder.titleTextView.setText(repo.getName());
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemListener.onRepoClick(repo);
+                }
+            });
         }
 
         @Override

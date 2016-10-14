@@ -74,6 +74,11 @@ public class ReposRepository implements ReposDataSource{
 
     }
 
+    @Override
+    public Observable<Repo> getRepo(@NonNull final int repoId) {
+        return localDataSource.getRepo(repoId);
+    }
+
     private Observable<List<Repo>> getAndCacheLocalRepos(){
         return localDataSource.getRepos(username)
                 .flatMap(new Func1<List<Repo>, Observable<List<Repo>>>() {
@@ -146,6 +151,11 @@ public class ReposRepository implements ReposDataSource{
             mCachedRepos = new LinkedHashMap<>();
         }
         mCachedRepos.clear();
+    }
+
+    @Nullable
+    private Repo getRepoWithId(@NonNull int repoId){
+        return null;
     }
 
 
